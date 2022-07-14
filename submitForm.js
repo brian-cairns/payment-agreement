@@ -1,10 +1,8 @@
 let submit = document.getElementById('submit')
 console.log(submit)
-const formName = 'webinarSingup'
+const formName = 'paymentAgreement'
 console.log('form: ' + formName)
 let newForm = {}
-let submitted = 0
-let additional = 0
 
 let caregiverName = document.querySelector('input#caregiverName')
 caregiverName.addEventListener('change', (e) => {
@@ -54,14 +52,9 @@ caregiverSignature.addEventListener('change', (e) => {
 	newForm.caregiverSignature = e.target.value;
   console.log(newForm.caregiverSignature);
 })
-
-paymentChoice = new Promise((res) => {
-    if (document.getElementById('paymentChoice1').isChecked) { res('$50/hr') }
-    else {res('$300/mo')}
-})
   
 document.getElementById('submit').addEventListener("click", async (event) => {
-    newForm.paymentChoice = await paymentChoice
+    newForm.paymentChoice = document.getElementById('paymentOption1').checked ? '$50/hr' : '$300/mo'
     submitForm(newForm, formName)
 })
 
