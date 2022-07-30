@@ -121,6 +121,6 @@ async function removeNotice(name, message) {
 //adding print functionality
 let printToPDF = document.getElementById('printToPDF')
 printToPDF.addEventListener('click'), (e) => {
-  sessionStorage.setItem('user', newForm.caregiverName)
+  sessionStorage.setItem('signer', newForm.caregiverName)
   location.href = 'https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/payment-agreement-form'
 }
