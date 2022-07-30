@@ -46,6 +46,9 @@ date.addEventListener('change', (e) => {
   console.log(newForm.date);
 })
 
+document.getElementById('signatureSection').style.display = "none"
+
+/*
 let caregiverSignature = document.querySelector('input#caregiverSignature')
 caregiverSignature.addEventListener('change', (e) => {
 	console.log('changed')
@@ -57,6 +60,7 @@ document.getElementById('submit').addEventListener("click", async (event) => {
     newForm.paymentChoice = document.getElementById('paymentOption1').checked ? '$50/hr' : '$300/mo'
     submitForm(newForm, formName)
 })
+*/
 
 async function submitForm(data, form) {
   const document = {
