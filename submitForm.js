@@ -46,7 +46,6 @@ date.addEventListener('change', (e) => {
   console.log(newForm.date);
 })
 
-document.getElementById('signatureSection').style.display = "none"
 
 /*
 let caregiverSignature = document.querySelector('input#caregiverSignature')
@@ -117,4 +116,11 @@ async function removeNotice(name, message) {
       //location.href = 'https://phoenix-freedom-foundation-backend.webflow.io/client-portal'
     })
     .catch(console.error)
+}
+
+//adding print functionality
+let printToPDF = document.getElementById('printToPDF')
+printToPDF.addEventListener('click'), (e) => {
+  sessionStorage.setItem('user', newForm.caregiverName)
+  location.href = 'https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/payment-agreement-form'
 }
