@@ -3,12 +3,14 @@ console.log(submit)
 const formName = 'paymentAgreement'
 console.log('form: ' + formName)
 let newForm = {}
+let signer = ''
 
 let caregiverName = document.querySelector('input#caregiverName')
 caregiverName.addEventListener('change', (e) => {
 	console.log('changed')
 	newForm.caregiverName = e.target.value;
   console.log(newForm.caregiverName);
+  signer = newForm.caregiverName
 })
 
 let address = document.querySelector('input#address')
@@ -54,12 +56,18 @@ caregiverSignature.addEventListener('change', (e) => {
 	newForm.caregiverSignature = e.target.value;
   console.log(newForm.caregiverSignature);
 })
-  
-document.getElementById('submit').addEventListener("click", async (event) => {
-    newForm.paymentChoice = document.getElementById('paymentOption1').checked ? '$50/hr' : '$300/mo'
-    submitForm(newForm, formName)
-})
 */
+
+document.getElementById('submit').addEventListener("click", async (event) => {
+  submitForm(newForm, 'newClientIntake')
+  sessionStorage.setItem('userName', newForm.clientName)
+  updateClient(newForm)
+  const message = '<p>Complete the <a href="/forms/new-client-intake-form">Payment Agreement Form</a></p>'
+  removeNotice(newForm.clientName, message)
+})
+
+let printForm = document.getElementById('printToPDF')
+printForm.style.display = 'none'
 
 async function submitForm(data, form) {
   const document = {
@@ -75,20 +83,28 @@ async function submitForm(data, form) {
     },
     body: JSON.stringify(document)
   })
-    .then((response) => {
-      if (response.status == 200) {
-      showSuccess()
-      } else {
-        showError(response.body)
-      }
-    })
+    .then(response => response.json())
+    .then(data => respond(data)) 
     .catch((err) => showError(err))
 }
 
-
-function showSuccess() {
-    document.getElementById('returnMessage').innerHTML = 'Form has been successfully submitted'
+function respond(data) {
+  let formId = data.formId
+  if (formId) {
+    showSuccess(formId) 
+  } else {
+    showError(data.error)
+  }
 }
+
+function showSuccess(formId) {
+  document.getElementById('returnMessage').innerHTML = 'Form has been successfully submitted'
+  printForm.style.display = 'inline';
+  printForm.addEventListener('click', (e) => {
+  location.href = `https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/new-client-intake-form?id=${client}`
+  })
+}
+
 
 function showError(err) {
     console.error
@@ -122,5 +138,5 @@ async function removeNotice(name, message) {
 let printToPDF = document.getElementById('printToPDF')
 printToPDF.addEventListener('click'), (e) => {
   sessionStorage.setItem('signer', newForm.caregiverName)
-  location.href = 'https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/payment-agreement-form'
+  location.href = 'https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/payment-agreement-form?id=signer'
 }
