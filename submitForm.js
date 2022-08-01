@@ -101,7 +101,7 @@ function showSuccess(formId) {
   document.getElementById('returnMessage').innerHTML = 'Form has been successfully submitted'
   printForm.style.display = 'inline';
   printForm.addEventListener('click', (e) => {
-  location.href = `https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/new-client-intake-form?id=${client}`
+  location.href = `https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/payment-agreement-form?id=${signer}`
   })
 }
 
@@ -134,9 +134,4 @@ async function removeNotice(name, message) {
     .catch(console.error)
 }
 
-//adding print functionality
-let printToPDF = document.getElementById('printToPDF')
-printToPDF.addEventListener('click'), (e) => {
-  sessionStorage.setItem('signer', newForm.caregiverName)
-  location.href = 'https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/payment-agreement-form?id=signer'
-}
+
